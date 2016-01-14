@@ -24,13 +24,12 @@ An app to manage tasks.
 
 **Laravel:**
 
- * Registration and login functionality. Email confirmation.
- * Lists boards
- * Indicate invitation to new boards
- * Creating a new board
+* Registration and login functionality. Email confirmation.
+* Lists boards
+* Indicate invitation to new boards
+* Creating a new board
 
-
- **Vue.js specific:**
+**Vue.js specific:**
 
 * Can create new tasks
 * Can view tasks
