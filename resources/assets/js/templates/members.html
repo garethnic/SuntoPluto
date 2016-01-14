@@ -1,0 +1,23 @@
+<div class="row center-block">
+    <div class="col-md-6">
+        <h4>All members</h4>
+
+         <li v-for="member in members" class="member_list">
+                {{ member.first_name }} {{ member.last_name }}
+        </li>
+
+        <h4>Add a member</h4>
+
+        <form id="add_member" class="form-horizontal" data-parsley-validate="" />
+            <div class="form-group">
+                <div class="col-md-6">
+                <input type="email" name="email" class="form-control" placeholder="New member email" v-model='newMember'
+                       data-parsley-trigger="change" data-parsley-type="email" required/>
+                </div>
+                <div class="col-md-3">
+                    <input type="submit" class="form-control btn btn-primary" name="add" value="Add Member" v-on:click="addNewMember" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="row center-block">
+    <div class="col-md-6">
+        <form class="task_form">
+            <input type="text" class="form-control" name="task" v-model="task" placeholder="Add task"/>
+
+            <input type="button" class="form-control btn btn-primary" name="submit" value="submit" v-on:click="addTask" />
+        </form>
+
+        <li v-for="task in tasks" class="task_item">
+            <span>{{ task.content }}</span> <br /> <br />
+            <button class="btn btn-danger btn-xs" v-on:click.prevent.stop="removeTask(this.task.id)">Delete</button>
+            <!--<i class="glyphicon glyphicon-remove" v-on:click.prevent.stop="removeTask(this.task.id)"></i>-->
+            <button class="btn btn-success btn-xs" v-on:click.prevent.stop="completeTask(this.task.id)">Complete</button>
+            <!--<i class="glyphicon glyphicon-ok" v-on:click.prevent.stop="completeTask(this.task.id)"></i>-->
+            <span v-if="task.user_count > 0">
+                <a v-link="{ path: '/assign/'+this.task.id }" v-if="!this.task.assigned_user">
+                    <span class="btn btn-primary btn-xs">Assign</span>
+                </a>
+                <a v-link="" v-else>{{ task.assignee.first_name }} {{ task.assignee.last_name }}</a>
+            </span>
+        </li>
+    </div>
+</div>

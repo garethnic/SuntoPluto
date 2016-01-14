@@ -1,0 +1,45 @@
+li {
+    list-style-type: none;
+}
+.glyphicon-ok {
+    cursor: pointer;
+    color: #00A000;
+}
+.glyphicon-remove {
+    cursor: pointer;
+    color: #880000;
+}
+.member_list {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.members_table {
+    width: 100%;
+}
+.members_table td {
+    width: 5%;
+    padding: 2%;
+}
+.task_form > input {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.task_form > button {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.task_item {
+    /*margin: 2%;*/
+    padding: 2%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(4, 4, 4, 0.1);
+    border-radius: 5px;
+    word-wrap: normal;
+    text-wrap: normal;
+}
+.task_item > i,
+.task_item > button,
+.task_item > a {
+    margin: 0.5%;
+}

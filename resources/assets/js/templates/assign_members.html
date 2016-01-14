@@ -1,0 +1,16 @@
+<div class="row center-block">
+    <div class="col-md-6"><h4>Assign to member</h4>
+    <!--<li v-for="member in members" class="member_list">
+        {{ member.first_name }} {{ member.last_name }}
+        <input type="button" class="btn btn-primary btn-xs member_assign" name="assign" value="Assign"
+               v-on:click="assignMember($route.params.task, this.member.id)" />
+    </li>-->
+        <table class="members_table">
+            <tr v-for="member in members">
+                <td>{{ member.first_name }} {{ member.last_name }}</td>
+                <td><input type="button" class="btn btn-primary btn-xs member_assign" name="assign" value="Assign"
+                           v-on:click="assignMember($route.params.task, this.member.id)" /></td>
+            </tr>
+        </table>
+    </div>
+</div>
