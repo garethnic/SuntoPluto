@@ -36,7 +36,7 @@ class TaskController extends Controller
             $task->user_count = $userCount;
         }
 
-        return response()->json($tasks);
+        return response()->json($tasks, 200);
     }
 
     /**
@@ -50,8 +50,11 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $user->tasks()->create([
-            'content' => $request->task
+            'content' => $request->task,
+            'board_identifier' => $request->board
         ]);
+
+        return response()->json('Task created', 200);
     }
 
     /**
@@ -68,7 +71,7 @@ class TaskController extends Controller
         $user = User::find($userId);
         $task = Task::where('id', $taskId)->update(['assigned_user' => $userId]);
 
-        return response()->json('success', 200);
+        return response()->json('Task assigned', 200);
     }
 
     /**
@@ -82,6 +85,8 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $user->tasks()->whereId($request->task)->first()->delete();
+
+        return response()->json('Task removed', 200);
     }
 
     /**
@@ -95,5 +100,7 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $user->tasks()->whereId($request->task)->first()->update(['done' => true]);
+
+        return response()->json('Task completed', 200);
     }
 }
