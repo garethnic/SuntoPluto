@@ -14808,36 +14808,32 @@ module.exports = {
         $('#add_member').parsley();
         var board = getValueAtIndex(4);
 
+        $('#add_member').parsley().on('field:validated', function () {
+            var ok = $('.parsley-error').length === 0;
+            $('.bs-callout-info').toggleClass('hidden', !ok);
+            $('.bs-callout-warning').toggleClass('hidden', ok);
+        }).on('form:success', function () {
+            var member = document.querySelector("[name='email']").value;
+            var board = getValueAtIndex(4);
+
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') } });
+
+            $.ajax({
+                url: "/boards/add-new-member",
+                method: "POST",
+                data: { email: member, board: board },
+                dataType: "json"
+            }).done(function () {
+                window.location.href = '/boards/' + board + '/tasks';
+            });
+        });
+
         var users = this.$http.post('/members', { board: board }).then(function (response) {
             this.$set('members', response.data);
         });
     },
 
-    template: require('../templates/members.html'),
-
-    methods: {
-        addNewMember: function addNewMember() {
-            $('#add_member').parsley().on('field:validated', function () {
-                var ok = $('.parsley-error').length === 0;
-                $('.bs-callout-info').toggleClass('hidden', !ok);
-                $('.bs-callout-warning').toggleClass('hidden', ok);
-            }).on('form:success', function () {
-                var member = document.querySelector("[name='email']").value;
-                var board = getValueAtIndex(4);
-
-                $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') } });
-
-                $.ajax({
-                    url: "/boards/add-new-member",
-                    method: "POST",
-                    data: { email: member, board: board },
-                    dataType: "json"
-                }).done(function () {
-                    window.location.href = '/boards/' + board + '/tasks';
-                });
-            });
-        }
-    }
+    template: require('../templates/members.html')
 };
 
 function getValueAtIndex(index) {
@@ -14857,20 +14853,40 @@ module.exports = {
     },
 
     ready: function ready() {
+        $('#add_task').parsley();
+
+        $('#add_task').parsley().on('field:validated', function () {
+            var ok = $('.parsley-error').length === 0;
+            $('.bs-callout-info').toggleClass('hidden', !ok);
+            $('.bs-callout-warning').toggleClass('hidden', ok);
+        }).on('form:success', function () {
+            var task = document.querySelector("[name='task']").value;
+            var board = getValueAtIndex(4);
+
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') } });
+
+            $.ajax({
+                url: "/tasks/add-task",
+                method: "POST",
+                data: { task: task, board: board }
+            }). //dataType: "json"
+            done(function () {
+                $("[name='task']").val('');
+                window.location.href = '/boards/' + board + '/tasks';
+            });
+        });
+
         this.refreshBoard();
     },
 
     template: require('../templates/tasks.html'),
 
     methods: {
-        addTask: function addTask() {
-            this.$http.post('/tasks/add-task', { task: this.$data.task }).then(function (response) {
-                this.task = '';
-                this.refreshBoard();
-            });
+        addTask: function addTask(e) {
+            this.refreshBoard();
         },
         refreshBoard: function refreshBoard() {
-            var board = this.getValueAtIndex(4);
+            var board = getValueAtIndex(4);
 
             var tasks = this.$http.post('/tasks/all_json', { board: board }).then(function (response) {
                 this.$set('tasks', response.data);
@@ -14893,12 +14909,17 @@ module.exports = {
     }
 };
 
+function getValueAtIndex(index) {
+    var str = window.location.href;
+    return str.split("/")[index];
+}
+
 },{"../templates/tasks.html":30}],28:[function(require,module,exports){
 module.exports = '<div class="row center-block">\n    <div class="col-md-6"><h4>Assign to member</h4>\n    <!--<li v-for="member in members" class="member_list">\n        {{ member.first_name }} {{ member.last_name }}\n        <input type="button" class="btn btn-primary btn-xs member_assign" name="assign" value="Assign"\n               v-on:click="assignMember($route.params.task, this.member.id)" />\n    </li>-->\n        <table class="members_table">\n            <tr v-for="member in members">\n                <td>{{ member.first_name }} {{ member.last_name }}</td>\n                <td><input type="button" class="btn btn-primary btn-xs member_assign" name="assign" value="Assign"\n                           v-on:click="assignMember($route.params.task, this.member.id)" /></td>\n            </tr>\n        </table>\n    </div>\n</div>';
 },{}],29:[function(require,module,exports){
 module.exports = '<div class="row center-block">\n    <div class="col-md-6">\n        <h4>All members</h4>\n\n         <li v-for="member in members" class="member_list">\n                {{ member.first_name }} {{ member.last_name }}\n        </li>\n\n        <h4>Add a member</h4>\n\n        <form id="add_member" class="form-horizontal" data-parsley-validate="" />\n            <div class="form-group">\n                <div class="col-md-6">\n                <input type="email" name="email" class="form-control" placeholder="New member email" v-model=\'newMember\'\n                       data-parsley-trigger="change" data-parsley-type="email" required/>\n                </div>\n                <div class="col-md-3">\n                    <input type="submit" class="form-control btn btn-primary" name="add" value="Add Member" v-on:click="addNewMember" />\n                </div>\n            </div>\n        </form>\n    </div>\n</div>';
 },{}],30:[function(require,module,exports){
-module.exports = '<div class="row center-block">\n    <div class="col-md-6">\n        <form class="task_form">\n            <input type="text" class="form-control" name="task" v-model="task" placeholder="Add task"/>\n\n            <input type="button" class="form-control btn btn-primary" name="submit" value="submit" v-on:click="addTask" />\n        </form>\n\n        <li v-for="task in tasks" class="task_item">\n            <span>{{ task.content }}</span> <br /> <br />\n            <button class="btn btn-danger btn-xs" v-on:click.prevent.stop="removeTask(this.task.id)">Delete</button>\n            <!--<i class="glyphicon glyphicon-remove" v-on:click.prevent.stop="removeTask(this.task.id)"></i>-->\n            <button class="btn btn-success btn-xs" v-on:click.prevent.stop="completeTask(this.task.id)">Complete</button>\n            <!--<i class="glyphicon glyphicon-ok" v-on:click.prevent.stop="completeTask(this.task.id)"></i>-->\n            <span v-if="task.user_count > 0">\n                <a v-link="{ path: \'/assign/\'+this.task.id }" v-if="!this.task.assigned_user">\n                    <span class="btn btn-primary btn-xs">Assign</span>\n                </a>\n                <a v-link="" v-else>{{ task.assignee.first_name }} {{ task.assignee.last_name }}</a>\n            </span>\n        </li>\n    </div>\n</div>';
+module.exports = '<div class="row center-block">\n    <div class="col-md-6">\n        <form class="task_form" id="add_task">\n            <input type="text" class="form-control" name="task" v-model="task" placeholder="Add task"\n                   data-parsley-required="true" data-parsley-maxlength="255" />\n\n            <input type="submit" class="form-control btn btn-primary" name="submit" value="submit" v-on:submit.prevent="addTask" />\n        </form>\n\n        <li v-for="task in tasks" class="task_item">\n            <span>{{ task.content }}</span> <br /> <br />\n            <button class="btn btn-danger btn-xs" v-on:click.prevent.stop="removeTask(this.task.id)">Delete</button>\n            <!--<i class="glyphicon glyphicon-remove" v-on:click.prevent.stop="removeTask(this.task.id)"></i>-->\n            <button class="btn btn-success btn-xs" v-on:click.prevent.stop="completeTask(this.task.id)">Complete</button>\n            <!--<i class="glyphicon glyphicon-ok" v-on:click.prevent.stop="completeTask(this.task.id)"></i>-->\n            <span v-if="task.user_count > 0">\n                <a v-link="{ path: \'/assign/\'+this.task.id }" v-if="!this.task.assigned_user">\n                    <span class="btn btn-primary btn-xs">Assign</span>\n                </a>\n                <a v-link="" v-else>{{ task.assignee.first_name }} {{ task.assignee.last_name }}</a>\n            </span>\n        </li>\n    </div>\n</div>';
 },{}]},{},[24]);
 
 //# sourceMappingURL=app.js.map
