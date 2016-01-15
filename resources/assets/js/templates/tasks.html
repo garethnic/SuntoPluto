@@ -1,9 +1,10 @@
 <div class="row center-block">
     <div class="col-md-6">
-        <form class="task_form">
-            <input type="text" class="form-control" name="task" v-model="task" placeholder="Add task"/>
+        <form class="task_form" id="add_task">
+            <input type="text" class="form-control" name="task" v-model="task" placeholder="Add task"
+                   data-parsley-required="true" data-parsley-maxlength="255" />
 
-            <input type="button" class="form-control btn btn-primary" name="submit" value="submit" v-on:click="addTask" />
+            <input type="submit" class="form-control btn btn-primary" name="submit" value="submit" v-on:submit.prevent="addTask" />
         </form>
 
         <li v-for="task in tasks" class="task_item">

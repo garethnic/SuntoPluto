@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->integer('assigned_user')->unsigned()->nullable();
             $table->foreign('assigned_user')->references('id')->on('users');
             $table->string('board_identifier');
+            $table->integer('completed_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

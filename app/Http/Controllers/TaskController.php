@@ -20,7 +20,7 @@ class TaskController extends Controller
      */
     public function getTasksJson(Request $request)
     {
-        $tasks = Task::where('board_identifier', $request->board)->whereDone(0)->get();
+        $tasks = Task::where('board_identifier', $request->board)->whereDone(0)->orderBy('created_at', 'desc')->get();
         $board = Board::where('identifier', $request->board)->first();
 
         $userCount = $board->users()->get()->count();
@@ -36,7 +36,7 @@ class TaskController extends Controller
             $task->user_count = $userCount;
         }
 
-        return response()->json($tasks);
+        return response()->json($tasks, 200);
     }
 
     /**
@@ -50,8 +50,11 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $user->tasks()->create([
-            'content' => $request->task
+            'content' => $request->task,
+            'board_identifier' => $request->board
         ]);
+
+        return response()->json('Task created', 200);
     }
 
     /**
@@ -68,7 +71,7 @@ class TaskController extends Controller
         $user = User::find($userId);
         $task = Task::where('id', $taskId)->update(['assigned_user' => $userId]);
 
-        return response()->json('success', 200);
+        return response()->json('Task assigned', 200);
     }
 
     /**
@@ -82,6 +85,8 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $user->tasks()->whereId($request->task)->first()->delete();
+
+        return response()->json('Task removed', 200);
     }
 
     /**
@@ -94,6 +99,10 @@ class TaskController extends Controller
     {
         $user = auth()->user();
 
-        $user->tasks()->whereId($request->task)->first()->update(['done' => true]);
+        Task::where('id', $request->task)->where('board_identifier', $request->board)
+                                  ->first()
+                                  ->update(['done' => true, 'completed_by' => $user->id]);
+
+        return response()->json('Task completed', 200);
     }
 }
