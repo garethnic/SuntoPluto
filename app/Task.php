@@ -13,7 +13,8 @@ class Task extends Model
         'content',
         'done',
         'assigned_user',
-        'board_identifier'
+        'board_identifier',
+        'completed_by'
     ];
 
     public function board()
