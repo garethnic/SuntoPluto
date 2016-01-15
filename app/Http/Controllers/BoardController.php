@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Flisk\Http\Requests;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 use Flisk\Http\Controllers\Controller;
 
 class BoardController extends Controller
@@ -79,30 +80,42 @@ class BoardController extends Controller
 
     /**
      * Add a new member to the board
+     * Check if new user or existing user is invited
      *
-     * @todo add members that are already registered
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function addMemberToBoard(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json('Email is required and in the right format', 400);
+        }
+
         $user = User::where('email', $request->email)->first();
         $board = Board::where('identifier', $request->board)->first();
 
         if (is_null($user)) {
-            /*$board->users()->create(['email' => $request->email]);
-
-            $createdUser = User::where('email', $request->email)->first();*/
-
             $member = Invite::create(['new_member' => $request->email, 'board_identifier' => $request->board]);
 
             Mail::send('auth.emails.invite_member', ['member' => $member], function ($m) use ($member) {
                 $m->from('info@suntopluto.com', 'SuntoPluto');
 
-                $m->to($member->new_member)->subject("You've been invited to join a board on SuntoPluto");
+                $m->to($member->new_member)->subject("Invitation to join a board on SuntoPluto");
             });
 
             return response()->json('successfully invited new member', 200);
+        } else {
+            $member = Invite::create(['new_member' => $user->email, 'board_identifier' => $request->board]);
+
+            Mail::send('invites.emails.invite_member', ['member' => $member, 'user' => $user], function ($m) use ($member) {
+                $m->from('info@suntopluto.com', 'SuntoPluto');
+
+                $m->to($member->new_member)->subject("Invitation to join a board on SuntoPluto");
+            });
         }
     }
 
