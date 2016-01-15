@@ -19,7 +19,7 @@ $factory->define(Flisk\User::class, function (Faker\Generator $faker) {
         'confirmed' => $faker->boolean(),
         'Username' => $faker->name,
         'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+        'password' => bcrypt('password'),
         'remember_token' => str_random(10),
     ];
 });

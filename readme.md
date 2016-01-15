@@ -7,6 +7,7 @@ An app to manage tasks.
 ##### TODO
 
 * Add more ACL/Authorization checks
+* Add form validation in laravel as backup for javascript
 * Add SweetAlert.js for cleaner user feedback
 * Send email to user when a task is assigned
 * Set up soft deletes in models
