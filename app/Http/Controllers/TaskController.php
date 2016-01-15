@@ -20,7 +20,7 @@ class TaskController extends Controller
      */
     public function getTasksJson(Request $request)
     {
-        $tasks = Task::where('board_identifier', $request->board)->whereDone(0)->get();
+        $tasks = Task::where('board_identifier', $request->board)->whereDone(0)->orderBy('created_at', 'desc')->get();
         $board = Board::where('identifier', $request->board)->first();
 
         $userCount = $board->users()->get()->count();
@@ -99,7 +99,9 @@ class TaskController extends Controller
     {
         $user = auth()->user();
 
-        $user->tasks()->whereId($request->task)->first()->update(['done' => true]);
+        Task::where('id', $request->task)->where('board_identifier', $request->board)
+                                  ->first()
+                                  ->update(['done' => true, 'completed_by' => $user->id]);
 
         return response()->json('Task completed', 200);
     }

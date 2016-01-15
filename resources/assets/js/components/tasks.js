@@ -54,7 +54,9 @@ module.exports = {
             });
         },
         completeTask: function (task) {
-            this.$http.post('/tasks/complete-task', {task: task}).then(function (response) {
+            var board = getValueAtIndex(4);
+
+            this.$http.post('/tasks/complete-task', {task: task, board: board}).then(function (response) {
                 this.refreshBoard();
             });
         },
