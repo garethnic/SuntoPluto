@@ -3,6 +3,7 @@
 namespace Flisk\Http\Controllers;
 
 use Flisk\Board;
+use Flisk\Jobs\assignedTaskToUserEmail;
 use Flisk\User;
 use Flisk\Task;
 use Illuminate\Http\Request;
@@ -69,7 +70,13 @@ class TaskController extends Controller
         $taskId = (int) $request->task;
 
         $user = User::find($userId);
-        $task = Task::where('id', $taskId)->update(['assigned_user' => $userId]);
+        $task = Task::find($taskId);
+
+        $updateTask = $task->update(['assigned_user' => $userId]);
+
+        $job = (new assignedTaskToUserEmail($user, $task))->delay(60 * 2);
+
+        $this->dispatch($job);
 
         return response()->json('Task assigned', 200);
     }
