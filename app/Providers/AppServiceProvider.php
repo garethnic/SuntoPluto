@@ -4,7 +4,9 @@ namespace Flisk\Providers;
 
 use Flisk\Board;
 use Flisk\User;
+use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
@@ -19,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Queue::failing(function (JobFailed $event) {
+           Log::error('Error with Queue');
+        });
+
         User::creating(function ($user) {
             return $user->token = str_random(12);
         });

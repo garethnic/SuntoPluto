@@ -2,12 +2,12 @@
 
 namespace Flisk\Http\Controllers\Auth;
 
+use Flisk\Jobs\sendConfirmationEmail;
 use Flisk\User;
 use Illuminate\Support\Facades\Route;
 use Validator;
 use Flisk\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -98,11 +98,9 @@ class AuthController extends Controller
 
         $user = $this->create($request->all());
 
-        Mail::send('auth.emails.confirm_user_reg', ['user' => $user], function ($m) use ($user) {
-            $m->from('info@suntopluto.com', 'SuntoPluto');
-
-            $m->to($user->email, $user->first_name)->subject('Confirm Registration');
-        });
+        //Queue confirmation email after registration
+        $job = (new sendConfirmationEmail($user))->delay(60 * 2);
+        $this->dispatch($job);
 
         return redirect($this->redirectPath());
     }

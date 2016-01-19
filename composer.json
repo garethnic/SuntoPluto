@@ -18,7 +18,8 @@
         "tymon/jwt-auth": "0.5.*",
         "barryvdh/laravel-cors": "0.7.x",
         "ramsey/uuid": "3.1.*",
-        "laravelcollective/html": "5.2.*"
+        "laravelcollective/html": "5.2.*",
+        "pda/pheanstalk": "~3.0"
     },
     "autoload": {
         "classmap": [

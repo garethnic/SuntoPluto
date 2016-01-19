@@ -4,7 +4,9 @@ namespace Flisk\Http\Controllers;
 
 use Flisk\Board;
 use Flisk\Invite;
-use Illuminate\Support\Facades\Mail;
+use Flisk\Jobs\inviteExistingUserToBoard;
+use Flisk\User;
+use Flisk\Jobs\inviteNewUserToBoard;
 use Illuminate\Http\Request;
 use Flisk\Http\Requests;
 use Illuminate\Support\Facades\Gate;
@@ -101,21 +103,21 @@ class BoardController extends Controller
         if (is_null($user)) {
             $member = Invite::create(['new_member' => $request->email, 'board_identifier' => $request->board]);
 
-            Mail::send('auth.emails.invite_member', ['member' => $member], function ($m) use ($member) {
-                $m->from('info@suntopluto.com', 'SuntoPluto');
+            //Queue invite email to new user
+            $job = (new inviteNewUserToBoard($member))->delay(60 * 2);
 
-                $m->to($member->new_member)->subject("Invitation to join a board on SuntoPluto");
-            });
+            $this->dispatch($job);
 
             return response()->json('successfully invited new member', 200);
         } else {
             $member = Invite::create(['new_member' => $user->email, 'board_identifier' => $request->board]);
 
-            Mail::send('invites.emails.invite_member', ['member' => $member, 'user' => $user], function ($m) use ($member) {
-                $m->from('info@suntopluto.com', 'SuntoPluto');
+            //Queue invite to existing user
+            $job = (new inviteExistingUserToBoard($member, $user))->delay(60 * 2);
 
-                $m->to($member->new_member)->subject("Invitation to join a board on SuntoPluto");
-            });
+            $this->dispatch($job);
+
+            return response()->json('successfully invited new member', 200);
         }
     }
 
