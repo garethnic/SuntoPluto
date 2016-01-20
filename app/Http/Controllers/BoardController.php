@@ -50,7 +50,7 @@ class BoardController extends Controller
             return redirect('/boards');
         }
 
-        return view('task_home');
+        return view('task_home', compact('board'));
     }
 
     /**
