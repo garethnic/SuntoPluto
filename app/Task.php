@@ -14,7 +14,8 @@ class Task extends Model
         'done',
         'assigned_user',
         'board_identifier',
-        'completed_by'
+        'completed_by',
+        'completed_on'
     ];
 
     public function board()

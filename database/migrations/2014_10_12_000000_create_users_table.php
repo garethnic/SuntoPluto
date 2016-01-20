@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->char('gender', 1)->nullable();
             $table->string('password', 60);
+            $table->string('timezone');
             $table->string('token', 16)->nullable();
             $table->boolean('confirmed')->default(0);
             $table->rememberToken();

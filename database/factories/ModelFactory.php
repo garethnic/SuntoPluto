@@ -19,6 +19,7 @@ $factory->define(Flisk\User::class, function (Faker\Generator $faker) {
         'confirmed' => $faker->boolean(),
         'Username' => $faker->name,
         'email' => $faker->email,
+        'timezone' => $faker->timezone,
         'password' => bcrypt('password'),
         'remember_token' => str_random(10),
     ];
@@ -27,7 +28,7 @@ $factory->define(Flisk\User::class, function (Faker\Generator $faker) {
 $factory->define(\Flisk\Task::class, function (Faker\Generator $faker) {
    return [
         'content' => $faker->sentence(rand(3, 8)),
-        'done' => $faker->boolean(),
+        'done' => 0,
    ];
 });
 

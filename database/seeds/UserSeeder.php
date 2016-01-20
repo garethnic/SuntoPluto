@@ -15,13 +15,14 @@ class UserSeeder extends Seeder
         factory(\Flisk\User::class, 5)->create();
 
         User::create([
-        'first_name' => 'Gareth',
-        'last_name' => 'Nicholson',
-        'gender' => 'm',
-        'confirmed' => 1,
-        'Username' => 'Gareth',
-        'email' => 'gareth.nic@gmail.com',
-        'password' => bcrypt('password'),
-        'remember_token' => str_random(10)]);
+            'first_name' => 'Gareth',
+            'last_name' => 'Nicholson',
+            'gender' => 'm',
+            'confirmed' => 1,
+            'username' => 'Gareth',
+            'email' => 'gareth.nic@gmail.com',
+            'timezone' => 'Africa/Johannesburg',
+            'password' => bcrypt('password'),
+            'remember_token' => str_random(10)]);
     }
 }
