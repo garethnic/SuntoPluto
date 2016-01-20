@@ -29,5 +29,9 @@
 
 @yield('scripts')
 
+<script src="/js/plugins/jquery-1.12.0.min.js"></script>
+<script src="/js/plugins/bootstrap.min.js"></script>
+<script src="/js/plugins/parsley.min.js"></script>
+
 </body>
 </html>

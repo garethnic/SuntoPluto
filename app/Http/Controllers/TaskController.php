@@ -6,6 +6,7 @@ use Flisk\Board;
 use Flisk\Jobs\assignedTaskToUserEmail;
 use Flisk\User;
 use Flisk\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Flisk\Http\Requests;
 use Flisk\Http\Controllers\Controller;
@@ -34,6 +35,8 @@ class TaskController extends Controller
             if (!is_null($task->assigned_user)) {
                 $task->assignee = User::where('id', $task->assigned_user)->first();
             }
+            $task->created_when = $task->created_at->diffForHumans();
+
             $task->user_count = $userCount;
         }
 
@@ -108,7 +111,7 @@ class TaskController extends Controller
 
         Task::where('id', $request->task)->where('board_identifier', $request->board)
                                   ->first()
-                                  ->update(['done' => true, 'completed_by' => $user->id]);
+                                  ->update(['done' => true, 'completed_by' => $user->id, 'completed_on' => Carbon::now()]);
 
         return response()->json('Task completed', 200);
     }

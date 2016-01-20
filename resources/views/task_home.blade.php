@@ -8,7 +8,7 @@
 
                 <a v-link="{ path: '/tasks' }">Tasks</a>
                 <a v-link="{ path: '/members' }">Members</a>
-                <a href="/boards">Boards</a>
+                @include('partials.reports_nav')
             </div>
         </div>
         <router-view></router-view>

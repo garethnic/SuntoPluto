@@ -30,5 +30,10 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/tasks/assign-task', ['uses' => 'TaskController@assignTask']);
 
         Route::post('/members', ['uses' => 'BoardController@getBoardMembers']);
+
+        Route::get('/{identifier}/reports', ['uses' => 'ReportController@index', 'as' => 'reports.index']);
+        Route::get('/{identifier}/reports/all-tasks', ['uses' => 'ReportController@allTasks', 'as' => 'reports.all_tasks']);
+        Route::get('/{identifier}/reports/completed-tasks', ['uses' => 'ReportController@completedTasks', 'as' => 'reports.completed_tasks']);
+        Route::get('/{identifier}/reports/deleted-tasks', ['uses' => 'ReportController@deletedTasks', 'as' => 'reports.deleted_tasks']);
     });
 });

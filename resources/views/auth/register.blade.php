@@ -83,6 +83,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('timezone') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Timezone</label>
+
+                            <div class="col-md-6">
+                                {!! TimeZone::selectForm('', 'Select a timezone', ['class' => 'form-control', 'name' => 'timezone']) !!}
+
+                                @if ($errors->has('timezone'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('timezone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Password</label>
 

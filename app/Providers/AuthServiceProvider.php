@@ -26,9 +26,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
+        //Protect user/board views
         $gate->define('see', function ($user, $board) {
             return $user->boards()->where('identifier', $board->identifier)->first();
         });
 
+        //Protect board owner views
+        $gate->define('isOwner', function ($user, $board) {
+            return $user->boards()->where('identifier', $board->identifier)
+                                  ->where('owner', $user->id)
+                                  ->first();
+        });
     }
 }
