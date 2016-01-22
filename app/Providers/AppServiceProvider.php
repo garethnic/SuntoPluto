@@ -5,7 +5,6 @@ namespace Flisk\Providers;
 use Flisk\Board;
 use Flisk\User;
 use Illuminate\Queue\Events\JobFailed;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Log;
@@ -27,14 +26,6 @@ class AppServiceProvider extends ServiceProvider
 
         User::creating(function ($user) {
             return $user->token = str_random(12);
-        });
-
-        User::created(function ($user) {
-            Mail::send('auth.emails.confirm_user_reg', ['user' => $user], function ($m) use ($user) {
-                $m->from('info@suntopluto.com', 'SuntoPluto');
-
-                $m->to($user->email, $user->first_name)->subject('Confirm Registration');
-            });
         });
 
         Board::creating(function ($board) {
