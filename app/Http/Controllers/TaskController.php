@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Flisk\Http\Requests;
 use Flisk\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -52,6 +53,15 @@ class TaskController extends Controller
     public function addTask(Request $request)
     {
         $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'content' => 'required',
+            'board_identifier' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back();
+        }
 
         $user->tasks()->create([
             'content' => $request->task,
