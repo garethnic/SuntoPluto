@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.reports_layout')
 
 @section('content')
     <div id="app">
@@ -7,13 +7,11 @@
                 <h4>Reports</h4>
                 <h5>Completed Tasks</h5>
 
-                @include('partials.reports_nav')
-
                 <div class="container">
                     <table class="table table-striped table-bordered">
                         <thead>
                             <th>Task</th>
-                            <th>Created</th>
+                            <th>Created On</th>
                             <th>Completed On</th>
                             <th>Completed By</th>
                         </thead>

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.reports_layout')
 
 @section('content')
     <div id="app">
@@ -7,13 +7,11 @@
                 <h4>Reports</h4>
                 <h5>Deleted Tasks</h5>
 
-                @include('partials.reports_nav')
-
                 <div class="container">
                     <table class="table table-striped table-bordered">
                         <thead>
                         <th>Task</th>
-                        <th>Created</th>
+                        <th>Created On</th>
                         <th>Deleted On</th>
                         </thead>
                         @foreach ($tasks as $task)
@@ -26,9 +24,6 @@
                                 </td>
                                 <td>
                                     {{ \Camroncade\Timezone\Facades\Timezone::convertFromUTC($task->deleted_at, $user->timezone, 'dS M, g:ia') }}
-                                </td>
-                                <td>
-                                    {{ $task->first_name }} {{ $task->last_name }}
                                 </td>
                             </tr>
                         @endforeach
