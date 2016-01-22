@@ -7,6 +7,7 @@ An app to manage tasks.
 ##### TODO
 
 * Add more ACL/Authorization checks
+* Show created by in reports
 * View task history per user
 * Add SweetAlert.js for cleaner user feedback
 * Set up soft deletes in models
