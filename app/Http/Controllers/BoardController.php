@@ -27,9 +27,7 @@ class BoardController extends Controller
 
         $boards = $user->boards()->get();
 
-        $invites = Invite::where('new_member', $user->email)->get();
-
-        return view('boards.index', compact('boards', 'invites'));
+        return view('boards.index', compact('boards'));
     }
 
     /**

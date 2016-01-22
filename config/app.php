@@ -152,6 +152,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Camroncade\Timezone\TimezoneServiceProvider::class,
+        \Flisk\Providers\ComposerServiceProvider::class,
 
         /*
          * Application Service Providers...
