@@ -19,7 +19,7 @@
                     @if (count($invites) >= 1)
                         <li><a href="/invites">Invites</a></li>
                     @endif
-                    @if (Request::path() === 'boards' or Request::path() === 'invites') @else
+                    @if (Request::path() === 'boards' or Request::path() === 'invites' or Request::path() === 'boards/new-board') @else
                         <li><a href="{{ route('tasks.index', ['identifier' => $board->identifier]) }}">{{ $board->name }}</a></li>
                         @include('partials.reports_dropdown')
                     @endif
