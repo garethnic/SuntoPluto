@@ -4,7 +4,7 @@
             <input type="text" class="form-control" name="task" v-model="task" placeholder="Add task"
                    data-parsley-required="true" data-parsley-maxlength="255" />
 
-            <input type="submit" class="form-control btn btn-primary" name="submit" value="submit" v-on:submit.prevent="addTask" />
+            <input type="submit" class="form-control btn btn-primary" name="submit" value="Add Task" v-on:submit.prevent="addTask" />
         </form>
 
         <li v-for="task in tasks" class="task_item">
