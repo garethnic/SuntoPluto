@@ -1,13 +1,14 @@
 @can('isOwner', $board)
-<span class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <li class="dropdown">
+    <a href="#" class="dropdown-toggle" id="dropdownMenu1" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="true" aria-expanded="false">
         Reports
         <span class="caret"></span>
-    </button>
+    </a>
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
         <li><a href="{{ route('reports.all_tasks', ['identifier' => $board->identifier]) }}">All Tasks</a></li>
         <li><a href="{{ route('reports.completed_tasks', ['identifier' => $board->identifier]) }}">Completed Tasks</a></li>
         <li><a href="{{ route('reports.deleted_tasks', ['identifier' => $board->identifier]) }}">Deleted Tasks</a></li>
     </ul>
-</span>
+    </li>
 @endcan
