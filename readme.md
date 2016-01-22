@@ -7,17 +7,20 @@ An app to manage tasks.
 ##### TODO
 
 * Add more ACL/Authorization checks
-* Test queueing functionality
-* Add form validation in laravel as backup for javascript
 * Add SweetAlert.js for cleaner user feedback
-* Send email to user when a task is assigned
 * Set up soft deletes in models
-* Add completed by field to tasks table
 * Hide data in json output
-* Add dashboard functionality
-* View completed and deleted tasks
 * Clean up app styling
 * Clean up ugly javascript bits
+
+##### Done
+
+* Add dashboard functionality
+* View completed and deleted tasks
+* Send email to user when a task is assigned
+* Test queueing functionality
+* Add completed by field to tasks table
+* Add form validation in laravel as backup for javascript
 
 ##### Dashboard
 
