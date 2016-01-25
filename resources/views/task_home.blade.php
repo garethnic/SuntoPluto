@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="app">
-        <div class="row center-block">
+        <div class="row col-md-offset-3">
             <div class="col-md-12">
                 <h4>{{ $board->name }}</h4>
 
@@ -15,7 +15,5 @@
 @stop
 
 @section('scripts')
-    <script src="{{ asset('js/plugins/jquery-1.12.0.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/parsley.min.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ elixir('js/app.js') }}"></script>
 @stop

@@ -9,7 +9,7 @@ Vue.use(VueValidator);
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("[name='_token']").content;
 
-var App = new Vue({});
+var App = Vue.extend({});
 
 var router = new VueRouter();
 

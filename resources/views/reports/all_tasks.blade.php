@@ -12,6 +12,7 @@
                         <thead>
                         <th>Task</th>
                         <th>Created On</th>
+                        <th>Created By</th>
                         <th>Completed On</th>
                         <th>Completed By</th>
                         <th>Deleted On</th>
@@ -24,6 +25,9 @@
                                 </td>
                                 <td>
                                     {{ \Camroncade\Timezone\Facades\Timezone::convertFromUTC($task->created_at, $user->timezone, 'dS M, g:ia') }}
+                                </td>
+                                <td>
+                                    {{ $task->createdBy }}
                                 </td>
                                 <td>
                                     @if (!is_null($task->completed_on))

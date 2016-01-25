@@ -12,6 +12,7 @@
                         <thead>
                             <th>Task</th>
                             <th>Created On</th>
+                            <th>Created By</th>
                             <th>Completed On</th>
                             <th>Completed By</th>
                         </thead>
@@ -22,6 +23,9 @@
                                 </td>
                                 <td>
                                     {{ \Camroncade\Timezone\Facades\Timezone::convertFromUTC($task->created_at, $user->timezone, 'dS M, g:ia') }}
+                                </td>
+                                <td>
+                                    {{ $task->createdBy }}
                                 </td>
                                 <td>
                                     {{ \Camroncade\Timezone\Facades\Timezone::convertFromUTC($task->updated_at, $user->timezone, 'dS M, g:ia') }}

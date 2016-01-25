@@ -1,5 +1,5 @@
-<div class="row center-block">
-    <div class="col-md-6">
+<div class="row col-md-offset-3">
+    <div class="col-md-8">
         <form class="task_form" id="add_task">
             <input type="text" class="form-control" name="task" v-model="task" placeholder="Add task"
                    data-parsley-required="true" data-parsley-maxlength="255" />
@@ -8,7 +8,9 @@
         </form>
 
         <li v-for="task in tasks" class="task_item">
-            <span>{{ task.content }}</span> <br /> <br />
+            <span class="pull-right task_created"><small>{{ task.created_when }}</small></span>
+
+            <span class="task_content">{{ task.content }}</span> <br /> <br />
             <button class="btn btn-danger btn-xs" v-on:click.prevent.stop="removeTask(this.task.id)">Delete</button>
             <!--<i class="glyphicon glyphicon-remove" v-on:click.prevent.stop="removeTask(this.task.id)"></i>-->
             <button class="btn btn-success btn-xs" v-on:click.prevent.stop="completeTask(this.task.id)">Complete</button>
@@ -17,9 +19,8 @@
                 <a v-link="{ path: '/assign/'+this.task.id }" v-if="!this.task.assigned_user">
                     <span class="btn btn-primary btn-xs">Assign</span>
                 </a>
-                <a v-link="" v-else>{{ task.assignee.first_name }} {{ task.assignee.last_name }}</a>
             </span>
-            <span class="pull-right"><small>{{ task.created_when }}</small></span>
+            <span><small><a href="" v-else>{{ task.assignee.first_name }} {{ task.assignee.last_name }}</a></small></span>
         </li>
     </div>
 </div>
