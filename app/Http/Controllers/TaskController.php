@@ -35,6 +35,8 @@ class TaskController extends Controller
         foreach($tasks as $task) {
             if (!is_null($task->assigned_user)) {
                 $task->assignee = User::where('id', $task->assigned_user)->first();
+            } else {
+                $task->assignee = [];
             }
             $task->created_when = $task->created_at->diffForHumans();
 
@@ -55,8 +57,7 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $validator = Validator::make($request->all(), [
-            'content' => 'required',
-            'board_identifier' => 'required'
+            'task' => 'required|min:3',
         ]);
 
         if ($validator->fails()) {

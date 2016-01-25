@@ -43,6 +43,10 @@ li {
 .task_item > a {
     margin: 0.5%;
 }
+.task_content {
+    display: inline-block;
+    margin: 2%;
+}
 .table {
     margin-top: 2%;
 }
