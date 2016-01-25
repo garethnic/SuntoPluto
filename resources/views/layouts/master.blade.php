@@ -10,7 +10,6 @@
     <meta name="_token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{{ asset('css/bootstrap-3.3.6/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ elixir('css/app.css') }}" rel="stylesheet" />
 
     @yield('head')
@@ -22,17 +21,14 @@
 @include('partials.navbar')
 <div class="container">
     <div class="row">
-        <div class="col-md-12 col-md-offset-3">
+        <div class="col-md-12">
             @yield('content')
         </div>
     </div>
 </div>
 
+<script src="{{ elixir('js/plugins.js') }}"></script>
 @yield('scripts')
-
-<script src="/js/plugins/jquery-1.12.0.min.js"></script>
-<script src="/js/plugins/bootstrap.min.js"></script>
-<script src="/js/plugins/parsley.min.js"></script>
 
 </body>
 </html>

@@ -10,7 +10,6 @@
     <meta name="_token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="{{ asset('css/bootstrap-3.3.6/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ elixir('css/app.css') }}" rel="stylesheet" />
 
     @yield('head')
@@ -30,9 +29,7 @@
 
 @yield('scripts')
 
-<script src="/js/plugins/jquery-1.12.0.min.js"></script>
-<script src="/js/plugins/bootstrap.min.js"></script>
-<script src="/js/plugins/parsley.min.js"></script>
+<script src="{{ elixir('js/site.js') }}"></script>
 
 </body>
 </html>
