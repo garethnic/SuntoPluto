@@ -53,6 +53,8 @@ class ReportController extends Controller
                 $user = User::find($task->completed_by);
                 $task->completedBy = $user->first_name . ' ' . $user->last_name;
             }
+            $user = User::find($task->user_id);
+            $task->createdBy = $user->first_name . ' ' . $user->last_name;
         }
 
         if (Gate::allows('isOwner', $board)) {
@@ -79,6 +81,11 @@ class ReportController extends Controller
                                    ->orderBy('tasks.completed_on', 'desc')
                                    ->paginate(10);
 
+        foreach($tasks as $task) {
+            $user = User::find($task->user_id);
+            $task->createdBy = $user->first_name . ' ' . $user->last_name;
+        }
+
         if (Gate::allows('isOwner', $board)) {
             return view('reports.completed_tasks', compact('board', 'tasks', 'user'));
         } else {
@@ -101,6 +108,11 @@ class ReportController extends Controller
         $tasks = Task::where('board_identifier', $identifier)->onlyTrashed()
                                                              ->orderBy('deleted_at', 'desc')
                                                              ->paginate(10);
+
+        foreach($tasks as $task) {
+            $user = User::find($task->user_id);
+            $task->createdBy = $user->first_name . ' ' . $user->last_name;
+        }
 
         if (Gate::allows('isOwner', $board)) {
             return view('reports.deleted_tasks', compact('board', 'tasks', 'user'));

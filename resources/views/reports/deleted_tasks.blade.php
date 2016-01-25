@@ -12,6 +12,7 @@
                         <thead>
                         <th>Task</th>
                         <th>Created On</th>
+                        <th>Created By</th>
                         <th>Deleted On</th>
                         </thead>
                         @foreach ($tasks as $task)
@@ -21,6 +22,9 @@
                                 </td>
                                 <td>
                                     {{ \Camroncade\Timezone\Facades\Timezone::convertFromUTC($task->created_at, $user->timezone, 'dS M, g:ia') }}
+                                </td>
+                                <td>
+                                    {{ $task->createdBy }}
                                 </td>
                                 <td>
                                     {{ \Camroncade\Timezone\Facades\Timezone::convertFromUTC($task->deleted_at, $user->timezone, 'dS M, g:ia') }}
