@@ -15,8 +15,6 @@
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
         "guzzlehttp/guzzle": "~5.3|~6.0",
-        "tymon/jwt-auth": "0.5.*",
-        "barryvdh/laravel-cors": "0.7.x",
         "ramsey/uuid": "3.1.*",
         "laravelcollective/html": "5.2.*",
         "pda/pheanstalk": "~3.0",
