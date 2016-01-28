@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class DatabaseSeeder extends Seeder
 {
     private $tables = [
+        'admins',
         'users',
         'tasks',
         'boards',
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
 
         $this->cleanup();
 
+        $this->call(AdminSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(BoardSeeder::class);
         $this->call(TaskSeeder::class);

@@ -7,6 +7,16 @@ Route::get('/', function () {
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('login', ['uses' => 'Auth\AdminAuthController@showLoginForm']);
+        Route::post('login', ['uses' => 'Auth\AdminAuthController@login']);
+        Route::get('logout', ['uses' => 'Auth\AdminAuthController@logout']);
+
+        Route::group(['middleware' => 'auth:admin'], function () {
+           Route::get('dashboard', ['uses' => 'AdminController@showDashboard']);
+        });
+    });
+
     Route::get('/confirmation/{username}/{token}', ['uses' => 'UserController@confirmUser', 'as' => 'confirm_user']);
 
     Route::get('/home', 'HomeController@index');
