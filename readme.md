@@ -1,6 +1,6 @@
 ## SuntoPluto
 
-An app to manage tasks.
+An app to manage tasks. Built with Laravel and Vue.js - unfinished.
 
 #### Features
 
